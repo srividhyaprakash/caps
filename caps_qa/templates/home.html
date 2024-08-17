@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Welcome, {{ user.username }}!</h2>
+  {% if user.userprofile %}
+    <p>Bio: {{ user.userprofile.bio }}</p>
+  {% endif %}
+  {% if question %}
+    <form method="post">
+      {% csrf_token %}
+      <div class="question">{{ question.text }}</div>
+      <textarea name="answer_text" rows="4" cols="50" placeholder="Enter your answer here"></textarea>
+      <input type="hidden" name="question_id" value="{{ question.id }}">
+      <button type="submit">Submit</button>
+    </form>
+  {% else %}
+    <p>No questions available at the moment.</p>
+  {% endif %}
+  <a href="{% url 'profile' %}">Edit Profile</a>
+  <a href="{% url 'logout' %}">Logout</a>
+{% endblock %}
